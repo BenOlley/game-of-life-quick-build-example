@@ -9,7 +9,7 @@ namespace GameOfLife.GameBoard
 {
     public class Board
     {
-        public Grid Grid { get; }
+        public Grid Grid;
         public SolidColorBrush aliveColor { get; private set; }
         public SolidColorBrush deadColor { get; private set; }
         public SolidColorBrush debugColor { get; private set; }

@@ -5,28 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GameOfLife"
         mc:Ignorable="d"
-        Title="Game of life" SizeToContent="WidthAndHeight" ResizeMode="NoResize">
+        Title="Game of life" SizeToContent="WidthAndHeight" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid x:Name="GameGrid" Background="Transparent"  VerticalAlignment="Top"/>
-        <Button x:Name="StartButton" Content="Start Simulation" Margin="0,0,0,0" VerticalAlignment="Bottom"  Width="110" Panel.ZIndex="100">
-            <Button.Background>
-                <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
-                    <GradientStop Color="#FFF3F3F3" Offset="0"/>
-                    <GradientStop Color="#FFEBEBEB" Offset="0.5"/>
-                    <GradientStop Color="#FFDDDDDD" Offset="0.5"/>
-                    <GradientStop Color="#FF5EE600" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.Background>
-        </Button>
-        <Button x:Name="StopButton" Content="Stop Simulation" Margin="220,0,0,0" VerticalAlignment="Bottom" Width="110" Panel.ZIndex="100">
-            <Button.Background>
-                <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
-                    <GradientStop Color="#FFF3F3F3" Offset="0"/>
-                    <GradientStop Color="#FFEBEBEB" Offset="0.5"/>
-                    <GradientStop Color="#FFDDDDDD" Offset="0.5"/>
-                    <GradientStop Color="Red" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.Background>
-        </Button>
+        <Button x:Name="StartButton" Content="Start Simulation" Margin="73,0,147,0" VerticalAlignment="Bottom"  Width="110" Panel.ZIndex="100" BorderBrush="#FF5EE600" Background="#FF5EE600"/>
+        <Button x:Name="StopButton" Content="Stop Simulation" Margin="183,0,37,0" VerticalAlignment="Bottom" Width="110" Panel.ZIndex="100" BorderBrush="Red" Background="Red"/>
     </Grid>
 </Window>

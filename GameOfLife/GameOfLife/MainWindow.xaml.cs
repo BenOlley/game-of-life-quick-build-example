@@ -1,4 +1,6 @@
 ﻿using GameOfLife.GameBoard;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,6 +23,7 @@ namespace GameOfLife
         private SolidColorBrush DebugColor = new SolidColorBrush(Color.FromRgb(204, 0, 224));
         private SolidColorBrush DeadColor = new SolidColorBrush(Color.FromRgb(224, 224, 224));
         private bool isSimulationRunning;
+        private List<CellCoordinate> CellsThatNeedUpdating = new List<CellCoordinate>();
 
         public MainWindow()
         {
@@ -37,14 +40,22 @@ namespace GameOfLife
 
             var cts = new CancellationTokenSource();
             var processGenerationTask = ProcessGenerationsAsync(cts.Token);
+            
         }
 
         async Task ProcessGenerationsAsync(CancellationToken token)
         {
             while (true)
             {
+                if (CellsThatNeedUpdating.Any())
+                {
+                    foreach (CellCoordinate cell in CellsThatNeedUpdating)
+                    {
+                        Board.SetGridCellState(cell.State, cell.Row, cell.Column);
+                    }
+                    CellsThatNeedUpdating.Clear();
+                }
                 token.ThrowIfCancellationRequested();
-
                 await Dispatcher.Yield(DispatcherPriority.Background);
 
                 if (isSimulationRunning == true)
@@ -63,19 +74,20 @@ namespace GameOfLife
                             {
                                 if (cellstate != CellState.dead)
                                 {
-                                    Board.SetGridCellState(CellState.dead, row, col);
+                                    CellsThatNeedUpdating.Add(new CellCoordinate(row, col,CellState.dead));
                                 }
                             }
                             else
                             {
                                 if (cellstate != CellState.alive)
                                 {
-                                    Board.SetGridCellState(CellState.alive, row, col);
+                                    CellsThatNeedUpdating.Add(new CellCoordinate(row, col, CellState.alive));
                                 }
                             }
                         }
                     }
-                }                
+                }       
+         
             }
         }
 
@@ -84,7 +96,7 @@ namespace GameOfLife
             if (sender != null)
             {
                 Rectangle rect = e.Source as Rectangle;
-                Board.setGridCellState(CellState.dead, rect);
+                Board.setGridCellState(CellState.alive, rect);
             }
         }
 
@@ -93,7 +105,7 @@ namespace GameOfLife
             if (sender != null)
             {
                 Rectangle rect = e.Source as Rectangle;
-                Board.setGridCellState(CellState.alive, rect);
+                Board.setGridCellState(CellState.dead, rect);
             }
         }
 
